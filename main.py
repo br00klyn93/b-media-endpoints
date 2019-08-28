@@ -22,14 +22,14 @@ def main():
 def authed():
     name = request.form["name"]
     token = request.form["access_token"]
-    data = {
+    a_dict = {
         "optimal_time": optimal_time(),
         "followers": get_stats("followers"),
         "views_last": get_stats("views_last"),
         "todays_imp": get_stats("todays_imp")
     }
     # print(request.form["access_token"])
-    return data
+    return a_dict
     # return render_template('index.html', optimal_time = optimal_time(),  followers = get_stats("followers"), views_last = get_stats("views_last"), todays_imp = get_stats("todays_imp"))
 
 
@@ -40,7 +40,7 @@ def optimal_time():
 
     f = r.json()
 
-    # print(f)
+    print(f)
 
     for i in f["data"]:
         if i["name"] == name:
