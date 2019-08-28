@@ -10,8 +10,6 @@ import json
 app = Flask(__name__)
 
 today = datetime.datetime.today().weekday()
-# token = ""
-# name = ""
 
 @app.route('/')
 def main():
@@ -90,7 +88,7 @@ def optimal_time(token, name):
 def get_stats(option, token, name):
     r = requests.get("https://graph.facebook.com/v4.0/me/accounts?access_token="+str(token))
     f = r.json()
-    
+
     for i in f["data"]:
         if i["name"] == name:
             n = requests.get("https://graph.facebook.com/v4.0/"+i["id"]+"?fields=instagram_business_account&access_token="+str(token))
