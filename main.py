@@ -22,28 +22,18 @@ def main():
 def authed():
     name = request.form["name"]
     new_token = request.form["access_token"]
-    # token = request.form["access_token"]
-    print(new_token)
+
     a_dict = {
         "optimal_time": optimal_time(new_token, name),
         "followers": get_stats("followers", new_token, name),
         "views_last": get_stats("views_last", new_token, name),
         "todays_imp": get_stats("todays_imp", new_token, name)
     }
-    # print(request.form["access_token"])
     return a_dict
-    # return render_template('index.html', optimal_time = optimal_time(),  followers = get_stats("followers"), views_last = get_stats("views_last"), todays_imp = get_stats("todays_imp"))
-
 
 def optimal_time(token, name):
     r = requests.get("https://graph.facebook.com/v4.0/me/accounts?access_token="+str(token))
-
-    # name = input('Please type the exact name of the Business Facebook Page attached to your Instagram ')
-
     f = r.json()
-
-    print(f)
-    print("Accessed with token: " + token)
 
     for i in f["data"]:
         if i["name"] == name:
@@ -59,8 +49,6 @@ def optimal_time(token, name):
             end_date = start_date + datetime.timedelta(days=7)
             end_date = end_date.replace(hour=23, minute=00,second=00)
 
-            # print(str(calendar.timegm(start_date.timetuple())) + " - " + str(calendar.timegm(end_date.timetuple())))
-
             j = requests.get("https://graph.facebook.com/v4.0/"+sec["instagram_business_account"]["id"]+"/insights?metric=online_followers&period=lifetime&since="+str(start_date)+"&until="+str(end_date)+"&access_token="+str(token))
 
             fin = j.json()
@@ -69,35 +57,27 @@ def optimal_time(token, name):
             views = []
 
             days_fin = []
-
-
             hours = 0
-            # print(fin["data"][0]["values"])
+
             for days in fin["data"][0]["values"]:
                 for times in days["value"]:
                     if hours <= 23:
-                        # print(str(times) + ":" + str(days["value"][times]))
                         hours_day.append(times)
                         views.append(days["value"][times])
                         hours+=1
-                    # days_times[str(times)] = days["value"][times]
                     else:
-                        # temp = 0
                         max = 0
                         first = True
                         for i in range(len(views)):
                             if first:
                                 max = views[i]
                                 first = False
-                                # temp+=1
                             else:
                                 if views[i] > max:
-                                    # print("Max is now: "+str(views[i])+" from "+str(max))
                                     max = views[i]
-                                    # temp+=1
+
                         temp = views.index(max)
                         days_fin.append(hours_day[temp])
-                        # print(str(temp) + " is current pos")
                         views = []
                         hours_day = []
                         max = 0
@@ -109,9 +89,8 @@ def optimal_time(token, name):
 
 def get_stats(option, token, name):
     r = requests.get("https://graph.facebook.com/v4.0/me/accounts?access_token="+str(token))
-    # name = input('Please type the exact name of the Business Facebook Page attached to your Instagram ')
-    # name = "Brooklyn McLaury"
     f = r.json()
+    
     for i in f["data"]:
         if i["name"] == name:
             n = requests.get("https://graph.facebook.com/v4.0/"+i["id"]+"?fields=instagram_business_account&access_token="+str(token))
