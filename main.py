@@ -6,6 +6,7 @@ from flask import request
 from flask import redirect
 from flask import render_template
 import json
+from flask_cors import CORS
 
 app = Flask(__name__)
 
