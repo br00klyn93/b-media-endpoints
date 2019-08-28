@@ -25,8 +25,8 @@ def authed():
         "access_token":request.form["access_token"],
         "uses": "0",
     }
-    print(request.form["access_token"])
-    return request.form["name"]
+    # print(request.form["access_token"])
+    return a_dict
     # return render_template('index.html', optimal_time = optimal_time(),  followers = get_stats("followers"), views_last = get_stats("views_last"), todays_imp = get_stats("todays_imp"))
 
 
