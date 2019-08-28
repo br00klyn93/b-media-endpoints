@@ -10,8 +10,8 @@ import json
 app = Flask(__name__)
 
 today = datetime.datetime.today().weekday()
-token = ""
-name = ""
+# token = ""
+# name = ""
 
 @app.route('/')
 def main():
@@ -22,20 +22,20 @@ def main():
 def authed():
     name = request.form["name"]
     new_token = request.form["access_token"]
-    token = request.form["access_token"]
+    # token = request.form["access_token"]
     print(new_token)
     a_dict = {
-        "optimal_time": optimal_time(),
-        "followers": get_stats("followers"),
-        "views_last": get_stats("views_last"),
-        "todays_imp": get_stats("todays_imp")
+        "optimal_time": optimal_time(new_token, name),
+        "followers": get_stats("followers", new_token, name),
+        "views_last": get_stats("views_last", new_token, name),
+        "todays_imp": get_stats("todays_imp", new_token, name)
     }
     # print(request.form["access_token"])
     return a_dict
     # return render_template('index.html', optimal_time = optimal_time(),  followers = get_stats("followers"), views_last = get_stats("views_last"), todays_imp = get_stats("todays_imp"))
 
 
-def optimal_time():
+def optimal_time(token, name):
     r = requests.get("https://graph.facebook.com/v4.0/me/accounts?access_token="+str(token))
 
     # name = input('Please type the exact name of the Business Facebook Page attached to your Instagram ')
@@ -107,7 +107,7 @@ def optimal_time():
             print(days_fin[5])
             return days_fin[5]
 
-def get_stats(option):
+def get_stats(option, token, name):
     r = requests.get("https://graph.facebook.com/v4.0/me/accounts?access_token="+str(token))
     # name = input('Please type the exact name of the Business Facebook Page attached to your Instagram ')
     # name = "Brooklyn McLaury"
