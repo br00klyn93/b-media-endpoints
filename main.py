@@ -41,6 +41,7 @@ def optimal_time():
     f = r.json()
 
     print(f)
+    print("Accessed with token: " + token)
 
     for i in f["data"]:
         if i["name"] == name:
