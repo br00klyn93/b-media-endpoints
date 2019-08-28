@@ -20,9 +20,9 @@ def main():
 
 @app.route('/auth_complete', methods=["POST"])
 def authed():
-    token = request.form["access_token"]
-    name = request.form["page_name"]
-    return render_template('index.html', optimal_time = optimal_time(),  followers = get_stats("followers"), views_last = get_stats("views_last"), todays_imp = get_stats("todays_imp"))
+    print(request.form)
+    return request.form
+    # return render_template('index.html', optimal_time = optimal_time(),  followers = get_stats("followers"), views_last = get_stats("views_last"), todays_imp = get_stats("todays_imp"))
 
 
 def optimal_time():
