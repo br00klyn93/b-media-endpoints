@@ -21,7 +21,9 @@ def main():
 @app.route('/auth_complete', methods=["POST"])
 def authed():
     name = request.form["name"]
+    new_token = request.form["access_token"]
     token = request.form["access_token"]
+    print(new_token)
     a_dict = {
         "optimal_time": optimal_time(),
         "followers": get_stats("followers"),
