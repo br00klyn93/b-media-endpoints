@@ -20,13 +20,16 @@ def main():
 
 @app.route('/auth_complete', methods=["POST"])
 def authed():
-    a_dict = {
-        "name": request.form["name"],
-        "access_token":request.form["access_token"],
-        "uses": "0",
+    name = request.form["name"]
+    token = request.form["access_token"]
+    data = {
+        "optimal_time": optimal_time(),
+        "followers": get_stats("followers"),
+        "views_last": get_stats("views_last"),
+        "todays_imp": get_stats("todays_imp")
     }
     # print(request.form["access_token"])
-    return a_dict
+    return data
     # return render_template('index.html', optimal_time = optimal_time(),  followers = get_stats("followers"), views_last = get_stats("views_last"), todays_imp = get_stats("todays_imp"))
 
 
