@@ -21,7 +21,7 @@ def main():
 @app.route('/auth_complete', methods=["POST"])
 def authed():
     print(request.form)
-    return request.form
+    return request.form["name"]
     # return render_template('index.html', optimal_time = optimal_time(),  followers = get_stats("followers"), views_last = get_stats("views_last"), todays_imp = get_stats("todays_imp"))
 
 
