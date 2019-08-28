@@ -2,16 +2,32 @@ import requests
 import datetime
 import calendar
 from flask import Flask
+from flask import request
+from flask import render_template
+import json
+
+app = Flask(__name__)
 
 today = datetime.datetime.today().weekday()
-token = request.form["access_token"]
+token = ""
+name = ""
+
+@app.route('/')
+def main():
+    # Just redirect to homepage until it posts to authed
+    return redirect("https://localhost:4443/", code=302)
+
+@app.route('/auth_complete', methods=["POST"])
+def authed():
+    token = request.form["access_token"]
+    name = request.form["page_name"]
+    return render_template('index.html', optimal_time = optimal_time(),  followers = get_stats("followers"), views_last = get_stats("views_last"), todays_imp = get_stats("todays_imp"))
+
 
 def optimal_time():
     r = requests.get("https://graph.facebook.com/v4.0/me/accounts?access_token="+str(token))
 
     # name = input('Please type the exact name of the Business Facebook Page attached to your Instagram ')
-    name = request.form["page_name"]
-
 
     f = r.json()
 
@@ -82,7 +98,7 @@ def optimal_time():
 def get_stats(option):
     r = requests.get("https://graph.facebook.com/v4.0/me/accounts?access_token="+str(token))
     # name = input('Please type the exact name of the Business Facebook Page attached to your Instagram ')
-    name = "Brooklyn McLaury"
+    # name = "Brooklyn McLaury"
     f = r.json()
     for i in f["data"]:
         if i["name"] == name:
@@ -109,15 +125,12 @@ def get_stats(option):
         print(x.json()["data"][0]["values"][0]["value"])
         return x.json()["data"][0]["values"][0]["value"]
 
-
     if option == "todays_imp":
         z = requests.get("https://graph.facebook.com/v4.0/"+str(id)+"/insights?metric=impressions&period=day&access_token="+str(token))
         # print(z.json())
         # print(x.json()["data"]["values"]["value"])
         print(z.json()["data"][0]["values"][0]["value"] + z.json()["data"][0]["values"][1]["value"])
         return z.json()["data"][0]["values"][0]["value"] + z.json()["data"][0]["values"][1]["value"]
-    if option == "post_time":
-        optimal_time()
 
-get_stats("post_time")
-# optimal_time()
+if __name__ == "__main__":
+    app.run("0.0.0.0",port=5000)

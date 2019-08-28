@@ -1,0 +1,6 @@
+Flask
+requests
+gunicorn
+datetime
+calendar
+json
