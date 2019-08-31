@@ -20,8 +20,9 @@ def main():
 
 @app.route('/auth_complete', methods=["POST"])
 def authed():
-    name = request.form["name"]
+    # name = request.form["name"]
     new_token = request.form["access_token"]
+    name = "Brooklyn McLaury"
 
     a_dict = {
         "optimal_time": optimal_time(new_token, name),
