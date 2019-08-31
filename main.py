@@ -22,7 +22,7 @@ def main():
 def authed():
     # name = request.form["name"]
     new_token = request.form["access_token"]
-    new_token = "EAAKfazv5gZAABAB59FEJ8jPlaUxkp28x5d5gM2ZBnBXMNtTQvcARZBPrqPYfJkf7JplaFXsVPyoGJgrJo58lnqrTqhoXGlj1sFKjxhx4Tml8VYlFHYztVGfgxq21iK6njTZBV1h7w8sAHTbehKk1ZClOOKkIz9ygzFFkjeHjtA05EJ2lzOB5B8ZB9hDXBiV6cZD"
+    #new_token = "EAAKfazv5gZAABAB59FEJ8jPlaUxkp28x5d5gM2ZBnBXMNtTQvcARZBPrqPYfJkf7JplaFXsVPyoGJgrJo58lnqrTqhoXGlj1sFKjxhx4Tml8VYlFHYztVGfgxq21iK6njTZBV1h7w8sAHTbehKk1ZClOOKkIz9ygzFFkjeHjtA05EJ2lzOB5B8ZB9hDXBiV6cZD"
     name = "Brooklyn McLaury"
 
     a_dict = {
