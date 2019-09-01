@@ -29,7 +29,8 @@ def authed():
         "optimal_time": optimal_time(new_token, name),
         "followers": get_stats("followers", new_token, name),
         "views_last": get_stats("views_last", new_token, name),
-        "todays_imp": get_stats("todays_imp", new_token, name)
+        "todays_imp": get_stats("todays_imp", new_token, name),
+        "profile_photo": get_state("photo", new_token, name)
     }
     return a_dict
 
