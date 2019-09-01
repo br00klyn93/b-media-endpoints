@@ -98,9 +98,11 @@ def get_stats(option, token, name):
             n = requests.get("https://graph.facebook.com/v4.0/"+i["id"]+"?fields=instagram_business_account&access_token="+str(token))
             sec = n.json()
     id = sec["instagram_business_account"]["id"]
-    
+
     if option == "photo":
-        z = requests.get("https://graph.facebook.com/v4.0/me?fields=id&access_token="+str(token))
+        z = requests.get("https://graph.facebook.com/v4.0/"+id+"?fields=profile_picture_url&access_token="+str(token))
+        return z.json()["profile_picture_url"]
+
     if option == "followers":
         z = requests.get("https://graph.facebook.com/v4.0/"+id+"?fields=business_discovery.username(brooklyn.mclaury){followers_count,media_count}&access_token="+str(token))
         print(z.json()["business_discovery"]["followers_count"])
